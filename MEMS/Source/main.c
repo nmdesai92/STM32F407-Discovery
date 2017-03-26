@@ -53,14 +53,10 @@
 uint8_t DemoIndex = 0;
 BSP_DemoTypedef  BSP_examples[]={
   {ACCELERO_MEMS_Test, "LIS302DL or LIS3DSH", 0}, 
- // {AudioPlay_Test, "CS43L22", 1},
-  //{AudioRecord_Test, "MP45DT02", 2},
 };
 
 __IO uint8_t UserPressButton = 0;
 
-/* Wave Player Pause/Resume Status. Defined as external in waveplayer.c file */
-//__IO uint32_t PauseResumeStatus = IDLE_STATUS;   
 
 /* Counter for User button presses*/
 __IO uint32_t PressCount = 0;
@@ -93,15 +89,6 @@ int main(void)
   
   /* Configure the system clock to 168 MHz */
   SystemClock_Config();
-  
-  /* Configure USER Button */
-  //BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_EXTI);
-  
-  /* Toggle LEDs between each Test */
-  //while (!UserPressButton)
-  //{
-  //  Toggle_Leds();
-  //}
     
   BSP_LED_Off(LED3);
   BSP_LED_Off(LED4);
@@ -111,16 +98,10 @@ int main(void)
   /* 1. Start Test: Wait For User inputs -------------------------------------*/
   while(1)
   {
-		
-			UserPressButton = 0;
-			 BSP_examples[0].DemoFunc();
-        
-    /* If all Demo has been already executed, Reset DemoIndex to restart BSP example */
-   /* if(DemoIndex >= COUNT_OF_EXAMPLE(BSP_examples))
-    {
-      DemoIndex = 0;
-    }*/
-    /* Toggle LEDs between each Test */
+    
+    UserPressButton = 0;
+    BSP_examples[0].DemoFunc();				//Accelerometer Function call
+   
     UserPressButton = 0;
     //while (!UserPressButton) Toggle_Leds();
     BSP_LED_Off(LED3);
@@ -191,37 +172,6 @@ static void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief  EXTI line detection callbacks.
-  * @param  GPIO_Pin: Specifies the pins connected EXTI line
-  * @retval None
-  */
-//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-//{
-//  if (KEY_BUTTON_PIN == GPIO_Pin)
-//  {
-//    while (BSP_PB_GetState(BUTTON_KEY) != RESET);
-//    UserPressButton = 1;
-//  }
-//  
-//  if(ACCELERO_INT2_PIN == GPIO_Pin) 
-//  {
-//    /* Clear MEMS click interruption */
-//    BSP_ACCELERO_Click_ITClear();
-//    if (PressCount == 1)
-//    {
-//      /* Resume playing Wave status */
-//      PauseResumeStatus = RESUME_STATUS;
-//      PressCount = 0;
-//    }
-//    else
-//    {
-//      /* Pause playing Wave status */
-//      PauseResumeStatus = PAUSE_STATUS;
-//      PressCount = 1;
-//    }
-//  }
-//}
 
 /**
   * @brief  Toggle LEDs
