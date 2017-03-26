@@ -80,10 +80,9 @@ void ACCELERO_MEMS_Test(void)
   }
   
   UserPressButton = 0;
- // while(!UserPressButton)
-  {
+  
     ACCELERO_ReadAcc();
-  }
+  
 }
 
 /**
