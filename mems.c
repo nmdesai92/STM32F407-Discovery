@@ -97,7 +97,7 @@ static void ACCELERO_ReadAcc(void)
   /* Accelerometer variables */
   int16_t buffer[3] = {0};
   int16_t xval, yval = 0x00;
-  int16_t on_time = 0;
+  int16_t xon_time = 0, yon_time = 0;
 	
   /* Read Acceleration */
   BSP_ACCELERO_GetXYZ(buffer);
@@ -109,23 +109,23 @@ static void ACCELERO_ReadAcc(void)
   {
     if(xval > ThresholdHigh)
     { 
-			on_time = 2422 - (xval*1550)/1800;
-			//on_time = 700;
-      /* LED5 On */
+      xon_time = 2422 - (xval*1550)/1800;		//Calculate ON time according to X-axis angle between 0 to 90
+      //on_time = 700;
+      /* LED5 PWM */
       BSP_LED_On(LED5);
-      us_Delay(on_time);
-			BSP_LED_Off(LED5);
-      us_Delay(20000 - on_time);
+      us_Delay(xon_time);
+      BSP_LED_Off(LED5);
+      us_Delay(20000 - xon_time);
     }
     else if(xval < ThresholdLow)
     { 
-			on_time = 2077 + (ABS(xval)*1550)/1800;;
+      xon_time = 2077 + (ABS(xval)*1550)/1800;		//Calculate ON time according  X-axis angle between 90 to 180 
       //on_time = 3800;
-			/* LED5 On */
+      /* LED5 PWM */
       BSP_LED_On(LED5);      
-      us_Delay(on_time);
-			BSP_LED_Off(LED5);
-      us_Delay(20000 - on_time);
+      us_Delay(xon_time);
+      BSP_LED_Off(LED5);
+      us_Delay(20000 - xon_time);
     }
     else
     { 
@@ -136,19 +136,27 @@ static void ACCELERO_ReadAcc(void)
   {
     if(yval < ThresholdLow)
     {
-      /* LED6 On */
+      yon_time = 2422 - (yval*1550)/1800;		//Calculate ON time according to Y-axis angle between 0 to 90
+      //on_time = 700;
+      /* LED6 PWM */
       BSP_LED_On(LED6);
-      HAL_Delay(10);
+      us_Delay(yon_time);
+      BSP_LED_Off(LED6);
+      us_Delay(20000 - yon_time);
     }
     else if(yval > ThresholdHigh)
     {
-      /* LED3 On */
-      BSP_LED_On(LED3);
-      HAL_Delay(10);
+      yon_time = 2422 - (yval*1550)/1800;		//Calculate ON time according to Y-axis angle between 90 to 180
+      //on_time = 700;
+      /* LED6 PWM */
+      BSP_LED_On(LED6);
+      us_Delay(yon_time);
+      BSP_LED_Off(LED6);
+      us_Delay(20000 - yon_time);
     } 
     else
     { 
-      HAL_Delay(10);
+      HAL_Delay(20);
     }
   } 
   
