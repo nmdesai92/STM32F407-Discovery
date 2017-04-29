@@ -46,9 +46,9 @@ void ACCELERO_MEMS_Test(void)
   */
 /*----------------------Angle Calulation-----------------------------------------------*/
 /*   
-		Motor Angle  	|	 90	 |	0	  | 180		|
-		Accel Reading |	200  | 2000 | 2000  |
-		PWM onTime  	|	2250 |  700	| 3800	|*/
+		Motor Angle  	|   90	 |  0	| 180	|
+		Accel Reading   |   200  | 2000 | 2000  |
+		PWM onTime  	|   2250 |  700	| 3800	|*/
 
 /*------------------------------Read Accelerometer----------------------------------*/
 static void ACCELERO_ReadAcc(void)
@@ -64,35 +64,35 @@ static void ACCELERO_ReadAcc(void)
   xval = buffer[0];
   yval = buffer[1];
   
-		if((ABS(xval))>(ABS(yval)))
-		{
-			if(xval > ThresholdHigh)
-			{ 
-				on_time = 2422 - (xval*1550)/1800;		//Motor Angle : 90->0 Pulse ==> Pulse Time 2250->700
-				//on_time = 700;
-				/* LED5  PWM pulse*/
-				BSP_LED_On(LED5);
-				us_Delay(on_time);
-				BSP_LED_Off(LED5);
-				us_Delay(20000 - on_time);
-			}
-			else if(xval < ThresholdLow)
-			{ 
-				on_time = 2077 + (ABS(xval)*1550)/1800;	//Motor Angle : 90->180 Pulse ==> Pulse Time 2250->3800
-			//	on_time = 3800;
-			/* LED5 PWM Pulse */
-				BSP_LED_On(LED5);      
-				us_Delay(on_time);
-				BSP_LED_Off(LED5);
-				us_Delay(20000 - on_time);
-			}
-			else							//Delay for stable : 90 degre		
-			{ 
-				BSP_LED_On(LED5);
-				us_Delay(2250);
-				BSP_LED_Off(LED5);
-				us_Delay(20000 - 2250);
-			}
+ if((ABS(xval))>(ABS(yval)))
+ {
+	if(xval > ThresholdHigh)
+	{ 
+		on_time = 2422 - (xval*1550)/1800;		//Motor Angle : 90->0 Pulse ==> Pulse Time 2250->700
+		//on_time = 700;
+		/* LED5  PWM pulse*/
+		BSP_LED_On(LED5);
+		us_Delay(on_time);
+		BSP_LED_Off(LED5);
+		us_Delay(20000 - on_time);
+	}
+	else if(xval < ThresholdLow)
+	{ 
+		on_time = 2077 + (ABS(xval)*1550)/1800;	//Motor Angle : 90->180 Pulse ==> Pulse Time 2250->3800
+	//	on_time = 3800;
+	/* LED5 PWM Pulse */
+		BSP_LED_On(LED5);      
+		us_Delay(on_time);
+		BSP_LED_Off(LED5);
+		us_Delay(20000 - on_time);
+	}
+	else							//Delay for stable : 90 degre		
+	{ 
+		BSP_LED_On(LED5);
+		us_Delay(2250);
+		BSP_LED_Off(LED5);
+		us_Delay(20000 - 2250);
+	}
   }
   else
   {
