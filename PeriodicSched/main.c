@@ -1,3 +1,8 @@
+/*---This creates seperate APIs for periodic Scheduler using built-in Keil-RTX APIs.
+	Also shows one testcase in which three periodic threads are created with
+	period of 10,30 and 16 seconds.A timer with period of 2 = gcd(10,30,16) is
+	started.This timer send a signal to schedule threads according to their 
+	periods.*/
 
 /* Includes ------------------------------------------------------------------*/
 #include "cmsis_os.h"
